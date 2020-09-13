@@ -10,12 +10,12 @@
 
 ## Ko
 
-Adobe Discord RPC의 업데이트 프로그램의 코드를 공개하는 레포지토리입니다.
+Adobe Discord RPC의 설치 프로그램의 코드를 공개하는 레포지토리입니다.
 
-v4.0 버전 출시 이후에는 설치, 삭제 프로그램의 코드도 공개됩니다.
+설치 방법은 [홈페이지](https://adoberpc.hwahyang.space)를 참고 해 주세요.
 
 ## En
 
-This is a Repository that publishes the code of Adobe Discord RPC updater.
+This is a Repository that publishes the code of Adobe Discord RPC Installer.
 
-After the release of the v4.0 version, the code of the installation and deletion program will also be released.
+Please refer to the [homepage](https://adoberpc.hwahyang.space) for installation instructions.
