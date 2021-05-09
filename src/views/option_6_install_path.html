@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-tabs">
+                  <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a id="header-license" class="grey-text" disabled>라이센스 동의</a></li>
+                    <li class="tab"><a id="header-privacy" class="grey-text" disabled>개인정보 수집 및 이용 동의</a></li>
+                    <li class="tab"><a id="header-options" class="grey-text" disabled>옵션 선택</a></li>
+                    <li class="tab"><a id="header-menu" class="grey-text" disabled>시작 메뉴 폴더 지정</a></li>
+                    <li class="tab"><a id="header-path" class="pink-text" disabled>설치 경로 지정</a></li>
+                    <li class="tab"><a id="header-install" class="grey-text" disabled>설치 진행</a></li>
+                    <li class="tab"><a id="header-finish" class="grey-text" disabled>설치 완료</a></li>
+                  </ul>
+                </div>
+                <div class="card-content">
+                  <h4 id="title" style="text-align: center;">프로그램 설치 경로 선택</h4>
+                  <p id="desc" style="text-align: center;">프로그램이 설치 될 경로를 선택하세요.</p>
+                  <br />
+                  <div class="col s12">
+                    <div class="input-field col s9">
+                      <input id="install_fd_name" type="text" class="validate" value="C:\Program Files\Adobe Discord RPC" disabled>
+                      <label id="install-path" for="install_fd_name">설치 경로</label>
+                    </div>
+                    <div class="col s3">
+                      <a id="find-folder" href="javascript:selectFolder()" style="margin-top: 13px;" class="btn waves-effect waves-light" type="submit">찾아보기
+                        <i class="material-icons right">folder</i>
+                      </a>
+                    </div>
+                  </div>
+                  <p id="folder-warn" style="text-align: center;" class="red-text">설치를 시작하면 폴더 내의 모든 파일이 삭제됩니다.</p>
+                  <p id="path-info" style="text-align: center;" class="orange-text">경로를 별도로 지정해도 일부 파일은 C드라이브에 설치됩니다.</p>
+                </div>
+                <div class="card-action">
+                  <a id="exit-button" href="javascript:void(0);" class="btn waves-effect waves-teal btn-flat red-text white left modal-trigger" data-target="exit_q">설치 취소</a>
+                  <a id="next-button" href="javascript:installCheck()" class="btn waves-effect waves-teal btn-flat cyan-text white right">다음 ></a>
+                  <a id="previous-button" href="option_5_startup.html" class="btn waves-effect waves-teal btn-flat orange-text white right">< 뒤로</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Modal Structure S -->
+    <div id="exit_q" class="modal">
+      <div class="modal-content">
+        <h4 id="modal-sure">정말로 종료할까요?</h4>
+        <p id="modal-desc1">아직 프로그램이 설치되지 않았습니다.</p>
+        <p id="modal-desc2">지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal-okay" href="javascript:installExit()" class="modal-close waves-effect waves-green btn-flat red-text">설치 프로그램 종료</a>
+        <a id="modal-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 화면으로 돌아가기</a>
+      </div>
+    </div>
+    <div id="install_check" class="modal">
+      <div class="modal-content">
+        <h4 id="check-title">설치를 시작할까요?</h4>
+        <p id="check-desc">선택하신 옵션이 맞는지 확인한 후, 설치를 시작하세요.</p>
+        <textarea id="option-area" cols="100" style="height: 200px; resize: none;" disabled>
+          asdf
+        </textarea>
+      </div>
+      <div class="modal-footer">
+        <a id="check-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat red-text">돌아가기</a>
+        <a id="check-okay" href="install.html" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 시작하기</a>
+      </div>
+    </div>
+    <!-- Modal Structure E -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function showExitModal() {
+        M.Modal.getInstance(document.getElementById('exit_q')).open();
+      }
+
+      function installExit() {
+        ipcRenderer.send('installExit', 0);
+      }
+
+      function selectFolder() {
+        let $input = $('#install_fd_name');
+        let folder = ipcRenderer.sendSync('selectFolder', $input.val());
+        $input.val(folder);
+      }
+
+      function installCheck() {
+        let config = ipcRenderer.sendSync('getInstallOption', 0);
+        console.log(config);
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        let input = '';
+        input += `${lang['check']['necessary']} -\n`;
+        input += `${lang['option']['mainProgram']}\n${lang['option']['monitorProgram']}\n${lang['option']['supportProgram']}\n${lang['option']['configurator']}\n${lang['option']['controller']}\n\n`;
+        input += `${lang['check']['choose']} -\n`;
+        if (config.startWithWindows === true) input += `${lang['option']['startWithWindows']}\n`;
+        if (config.desktopShortcut === true) input += `${lang['option']['desktopShortCut']}\n`;
+        if (config.startWithWindows === false && config.desktopShortcut === false) input += `${lang['check']['null']}\n`;
+        input += `\n${lang['check']['folder']} : `;
+        if (config.startMenuFolderUse === false) input += `${lang['check']['folderDontUse']}\n`;
+        else input += `${config.startMenuFolder}\n`;
+        input += `${lang['check']['path']} : ${config.installPath}`;
+        $('#option-area').val(input);
+        $('.modal').modal();
+        M.Modal.getInstance(document.getElementById('install_check')).open();
+      }
+
+      $(document).ready(function(){
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#header-license').html(lang['header']['headerLicense']);
+        $('#header-privacy').html(lang['header']['headerPrivacy']);
+        $('#header-options').html(lang['header']['headerOptions']);
+        $('#header-menu').html(lang['header']['headerMenu']);
+        $('#header-path').html(lang['header']['headerPath']);
+        $('#header-confirm').html(lang['header']['headerConfirm']);
+        $('#header-install').html(lang['header']['headerInstall']);
+        $('#header-finish').html(lang['header']['headerFinish']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#next-button').html(`${lang['nextButton']} >`);
+        $('#previous-button').html(`< ${lang['previousButton']}`);
+        $('#modal-sure').html(lang['exitModal']['modalSure']);
+        $('#modal-desc1').html(lang['exitModal']['modalDesc1']);
+        $('#modal-desc2').html(lang['exitModal']['modalDesc2']);
+        $('#modal-okay').html(lang['exitModal']['modalOkay']);
+        $('#modal-return').html(lang['exitModal']['modalReturn']);
+        $('.modal').modal();
+
+        $('#title').html(lang['path']['title']);
+        $('#desc').html(lang['path']['desc']);
+        $('#install-path').html(lang['path']['installPath']);
+        $('#find-folder').html(`${lang['path']['findFolder']}<i class="material-icons right">folder</i>`);
+        $('#path-info').html(lang['path']['pathInfo']);
+
+        let config = ipcRenderer.sendSync('getInstallOption', 0);
+        $('#startup_fd_name').val(config.installPath);
+
+        ipcRenderer.on('exitModal', (arg) => {
+          showExitModal();
+        });
+      });
+    </script>
+  </body>
+</html>

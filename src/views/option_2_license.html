@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-tabs">
+                  <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a id="header-license" class="pink-text" disabled>라이센스 동의</a></li>
+                    <li class="tab"><a id="header-privacy" class="grey-text" disabled>개인정보 수집 및 이용 동의</a></li>
+                    <li class="tab"><a id="header-options" class="grey-text" disabled>옵션 선택</a></li>
+                    <li class="tab"><a id="header-menu" class="grey-text" disabled>시작 메뉴 폴더 지정</a></li>
+                    <li class="tab"><a id="header-path" class="grey-text" disabled>설치 경로 지정</a></li>
+                    <li class="tab"><a id="header-install" class="grey-text" disabled>설치 진행</a></li>
+                    <li class="tab"><a id="header-finish" class="grey-text" disabled>설치 완료</a></li>
+                  </ul>
+                </div>
+                <div class="card-content">
+                  <h4 id="agreement" style="text-align: center;">라이선스 동의</h4>
+                  <p id="desc1" style="text-align: center;">아래 라이선스를 정독 하신 다음, 라이선스 동의 여부를 체크 해 주세요.</p>
+                  <p id="desc2" style="text-align: center;">전문을 읽지 않아서 생기는 문제의 책임은 전적으로 이용자에게 있습니다.</p>
+                  <!-- Please read the license below carefully and check whether you agree to the license.<br />The problem caused by not reading the full text lies entirely with the user. -->
+                  <br />
+                  <textarea id="license-area" cols="100" style="height: 180px; resize: none;" disabled></textarea>
+                  <br /><br />
+                  <label onClick="check();">
+                    <input type="checkbox" class="check" id="licenseCheck" />
+                    <span id="accept">본인은 상기 라이선스에 동의합니다.</span>
+                  </label>
+                </div>
+                <div class="card-action">
+                  <a id="exit-button" href="javascript:void(0);" class="btn waves-effect waves-teal btn-flat red-text white left modal-trigger" data-target="exit_q">설치 취소</a>
+                  <a id="next-button" href="javascript:next()" class="btn waves-effect waves-teal btn-flat cyan-text white right" disabled="true">다음 ></a>
+                  <a id="previous-button" href="option_1_welcome.html" class="btn waves-effect waves-teal btn-flat orange-text white right">< 뒤로</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Modal Structure S -->
+    <div id="exit_q" class="modal">
+      <div class="modal-content">
+        <h4 id="modal-sure">정말로 종료할까요?</h4>
+        <p id="modal-desc1">아직 프로그램이 설치되지 않았습니다.</p><p id="modal-desc2">지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal-okay" href="javascript:installExit()" class="modal-close waves-effect waves-green btn-flat red-text">설치 프로그램 종료</a>
+        <a id="modal-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 화면으로 돌아가기</a>
+      </div>
+    </div>
+    <!-- Modal Structure E -->
+
+    <!-- JS -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function showExitModal() {
+        M.Modal.getInstance(document.getElementById('exit_q')).open();
+      }
+
+      function installExit() {
+        ipcRenderer.send('installExit', 0);
+      }
+
+      function next() {
+        ipcRenderer.send('licenseNext', 0);
+      }
+
+      $(document).ready(function(){
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#header-license').html(lang['header']['headerLicense']);
+        $('#header-privacy').html(lang['header']['headerPrivacy']);
+        $('#header-options').html(lang['header']['headerOptions']);
+        $('#header-menu').html(lang['header']['headerMenu']);
+        $('#header-path').html(lang['header']['headerPath']);
+        $('#header-confirm').html(lang['header']['headerConfirm']);
+        $('#header-install').html(lang['header']['headerInstall']);
+        $('#header-finish').html(lang['header']['headerFinish']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#next-button').html(`${lang['nextButton']} >`);
+        $('#previous-button').html(`< ${lang['previousButton']}`);
+        $('#modal-sure').html(lang['exitModal']['modalSure']);
+        $('#modal-desc1').html(lang['exitModal']['modalDesc1']);
+        $('#modal-desc2').html(lang['exitModal']['modalDesc2']);
+        $('#modal-okay').html(lang['exitModal']['modalOkay']);
+        $('#modal-return').html(lang['exitModal']['modalReturn']);
+        $('.modal').modal();
+
+        $('#agreement').html(lang['license']['agreement']);
+        $('#desc1').html(lang['license']['desc1']);
+        $('#desc2').html(lang['license']['desc2']);
+        $('#accept').html(lang['license']['accept']);
+
+        let license = ipcRenderer.sendSync('getLicense', 0);
+        $('#license-area').val(license);
+
+        let config = ipcRenderer.sendSync('getInstallOption', 0);
+        $('#licenseCheck').attr('checked', config.licenseAgree);
+
+        check();
+
+        ipcRenderer.on('exitModal', (arg) => {
+          showExitModal();
+        });
+      });
+
+      function check() {
+        let checked = $('input:checkbox[id=licenseCheck]').is(":checked");
+        let next_btn = $('#next-button');
+        if (checked === true) {
+          next_btn.attr('disabled', false);
+        } else if (checked === false) {
+          next_btn.attr('disabled', true);
+        }
+      }
+    </script>
+  </body>
+</html>

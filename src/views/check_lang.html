@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <!-- script libraries -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p id="lang-desc" style="text-align: center;">언어를 선택하세요 (Select Language)</p>
+                  <br />
+                  <div class="input-field col s12">
+                    <select id="lang-select" onchange="Lang()">
+                      <option value="ko">한국어 (South Korea)</option>
+                      <option value="en">English (United States)</option>
+                    </select>
+                  </div>
+                  <br />
+                  <p id="desc" style="text-align: center;">선택하신 언어로 프로그램이 설치됩니다.<br />(The program will be installed in the selected language.)</p>
+                </div>
+                <div class="card-action">
+                  <a id="exit-button" href="javascript:void(0);" class="btn waves-effect waves-teal btn-flat red-text white left modal-trigger" data-target="exit_q">취소</a>
+                  <a id="start-button" href="javascript:setLanguage();" class="btn waves-effect waves-teal btn-flat cyan-text white right">결정 ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Modal Structure S -->
+    <div id="exit_q" class="modal">
+      <div class="modal-content">
+        <h4 id="modal-sure">정말로 종료할까요?</h4>
+        <p id="modal-desc1">아직 프로그램이 설치되지 않았습니다.</p>
+        <p id="modal-desc2">지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal-okay" href="javascript:installExit()" class="modal-close waves-effect waves-green btn-flat red-text">설치 프로그램 종료</a>
+        <a id="modal-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 화면으로 돌아가기</a>
+      </div>
+    </div>
+    <!-- Modal Structure E -->
+
+    <!-- JS -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function setLanguage() {
+        let selected = $("#lang-select option:selected").val();
+        ipcRenderer.send('setLanguage', selected);
+      }
+
+      function Lang() {
+        let selected = $("#lang-select option:selected").val();
+        let lang = ipcRenderer.sendSync('getLang', selected);
+        // if (lang === undefined) TODO:: lang 파일 없을 때 처리 필요.
+        $('#modal-sure').html(lang['exitModal']['modalSure']);
+        $('#modal-desc1').html(lang['exitModal']['modalDesc1']);
+        $('#modal-desc2').html(lang['exitModal']['modalDesc2']);
+        $('#modal-okay').html(lang['exitModal']['modalOkay']);
+        $('#modal-return').html(lang['exitModal']['modalReturn']);
+        $('#lang-desc').html(lang['language']['langDesc']);
+        $('#desc').html(lang['language']['desc']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#start-button').html(`${lang['language']['startButton']} >`);
+        $('.modal').modal();
+      }
+
+      function showExitModal() {
+        M.Modal.getInstance(document.getElementById(`exit_q`)).open();
+      }
+
+      function installExit() {
+        ipcRenderer.send('installExit', 0);
+      }
+
+      $(document).ready(function () {
+        $('select').formSelect();
+        Lang();
+
+        ipcRenderer.on('exitModal', (arg) => {
+          showExitModal();
+        });
+      });
+    </script>
+  </body>
+</html>

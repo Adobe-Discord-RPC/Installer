@@ -1,0 +1,214 @@
+{
+  "language": {
+    "langDesc": "언어를 선택하세요",
+    "desc": "선택하신 언어로 프로그램이 설치됩니다.",
+    "startButton": "설치 시작"
+  },
+  "welcome": {
+    "title": "Adobe Discord RPC 설치",
+    "desc1": "Adobe Discord RPC 설치를 시작합니다.",
+    "desc2": "계속하려면 '다음'을 누르세요."
+  },
+  "license": {
+    "agreement": "라이선스 동의",
+    "desc1": "아래 라이선스를 정독하신 다음, 라이선스 동의 여부를 체크 해 주세요.",
+    "desc2": "전문을 읽지 않아서 생기는 문제의 책임은 전적으로 이용자에게 있습니다.",
+    "accept": "본인은 상기 라이선스에 동의합니다."
+  },
+  "privacy": {
+    "agreement": "개인정보 수집 및 이용 동의",
+    "desc1": "아래 개인정보 수집 및 이용 안내를 정독 하신 다음, 동의 여부를 체크 해 주세요.",
+    "desc2": "전문을 읽지 않아서 생기는 문제의 책임은 전적으로 이용자에게 있습니다.",
+    "accept": "본인은 상기 개인정보 수집 및 이용에 동의합니다."
+  },
+  "option": {
+    "title": "설치 옵션 선택",
+    "desc": "프로그램 설치 옵션을 선택하세요.",
+    "mainProgram": "Adobe Discord RPC 메인 프로그램",
+    "monitorProgram": "Adobe Discord RPC 프로그램 실행 모니터",
+    "supportProgram": "Adobe Discord RPC 지원 프로그램 목록",
+    "controller": "Adobe Discord RPC Controller",
+    "configurator": "Adobe Discord RPC Configurator",
+    "startWithWindows": "Windows와 함께 프로그램 시작",
+    "desktopShortCut": "바탕화면에 바로가기 추가"
+  },
+  "startup": {
+    "title": "시작메뉴 폴더 지정",
+    "desc": "프로그램의 바로가기가 생성 될 시작메뉴 폴더를 지정하세요.",
+    "folderName": "시작메뉴 폴더 이름",
+    "dontUse": "시작메뉴 폴더를 사용하지 않습니다."
+  },
+  "path": {
+    "title": "프로그램 설치 경로 선택",
+    "desc": "프로그램이 설치 될 경로를 선택하세요.",
+    "installPath": "설치 경로",
+    "findFolder": "찾아보기",
+    "pathInfo": "경로를 별도로 지정해도 일부 파일은 C드라이브에 설치됩니다."
+  },
+  "check": {
+    "necessary": "필수 설치 요소",
+    "choose": "선택 설치 요소",
+    "null": "해당 없음",
+    "folder": "시작메뉴 폴더",
+    "folderDontUse": "사용하지 않음",
+    "path": "설치 경로"
+  },
+  "install": {
+    "title": "프로그램 설치 진행중",
+    "desc1": "선택하신 설정에 따라 프로그램을 설치하고 있습니다.",
+    "desc2": "설치 도중 절전모드로 전환되거나 프로그램이 종료될 경우, 문제가 생길 수 있습니다.",
+    "infoMsg": {
+      "PG": {
+        "Core": "메인 프로그램",
+        "List": "지원 프로그램 목록",
+        "Monitor": "프로그램 실행 모니터",
+        "Configurator": "프로그램 Configurator",
+        "Controller": "프로그램 컨트롤러",
+        "Scripts": "필수 스크립트 (C 드라이브에 설치됩니다)"
+      },
+      "wrongAccess": "잘못된 접근입니다.",
+      "startInstall": "프로그램 설치 과정을 시작합니다.",
+      "folderInit": {
+        "working": "\n설치 폴더를 초기화하고 있습니다...",
+        "failed": "설치 폴더 초기화에 실패했습니다.",
+        "success": "설치 폴더를 성공적으로 초기화 하였습니다."
+      },
+      "fileDownload": {
+        "working": "\n%PROGRAMNAME% 다운로드를 시작합니다.",
+        "failed": "%PROGRAMNAME% 다운로드에 실패했습니다.",
+        "success": "%PROGRAMNAME% 다운로드가 완료되었습니다."
+      },
+      "fileCheck": {
+        "failed": "무결성 검사에 실패했습니다.",
+        "success": "무결성 검사가 완료되었습니다."
+      },
+      "fileUnpack": {
+        "working": "\n%PROGRAMNAME% 압축을 임시 폴더에 풀고 있습니다.\nPC 사양에 따라 몇 분 정도 시간이 소요됩니다.",
+        "failed": "%PROGRAMNAME% 압축 풀기에 실패했습니다.",
+        "success": "성공적으로 임시 폴더에 압축을 풀었습니다."
+      },
+      "fileMove": {
+        "working": "\n파일을 이동하고 있습니다.\nPC 사양에 따라 몇 분 정도 시간이 소요됩니다.",
+        "failed": "파일 이동에 실패했습니다.",
+        "success": "성공적으로 파일을 이동했습니다."
+      },
+      "writeSetting": {
+        "working": "\n설정파일을 생성하고 있습니다.",
+        "failed": "설정파일 생성에 실패했습니다.",
+        "success": "성공적으로 설정파일을 생성했습니다."
+      },
+      "writeRegs": {
+        "working": "\n레지스트리에 데이터를 등록하고 있습니다.",
+        "failed": "레지스트리 등록에 실패했습니다.",
+        "success": "성공적으로 레지스트리에 데이터를 등록했습니다."
+      },
+      "startMenuShortCut": {
+        "working": "\n시작메뉴에 프로그램 바로가기를 생성하고 있습니다.",
+        "failed": "프로그램 바로가기 생성에 실패했습니다.",
+        "success": "성공적으로 생성했습니다."
+      },
+      "startup": {
+        "working": "\n윈도우 시작과 함께 프로그램이 실행되도록 등록하고 있습니다.",
+        "failed": "등록에 실패했습니다.",
+        "success": "성공적으로 등록했습니다."
+      },
+      "desktopShortCut": {
+        "working": "\n바탕화면에 프로그램 바로가기를 생성하고 있습니다.",
+        "failed": "프로그램 바로가기 생성에 실패했습니다.",
+        "success": "바탕화면에 프로그램 바로가기를 생성했습니다."
+      }
+    },
+    "shortCut": {
+      "startMenu": {
+        "run": {
+          "name": "Adobe Discord RPC 실행",
+          "comment": "Adobe Discord RPC를 실행합니다."
+        },
+        "exit": {
+          "name": "Adobe Discord RPC 종료",
+          "comment": "Adobe Discord RPC를 종료합니다."
+        },
+        "configurator": {
+          "name": "Adobe Discord RPC Configurator",
+          "comment": "Adobe Discord RPC Configurator를 실행합니다."
+        },
+        "setting": {
+          "name": "Adobe Discord RPC 설정",
+          "comment": "Adobe Discord RPC 설정을 변경합니다."
+        },
+        "update": {
+          "name": "Adobe Discord RPC 업데이트",
+          "comment": "Adobe Discord RPC 업데이트를 확인합니다."
+        },
+        "delete": {
+          "name": "Adobe Discord RPC 제거",
+          "comment": "Adobe Discord RPC를 제거합니다."
+        },
+        "homepage": {
+          "name": "Adobe Discord RPC 홈페이지",
+          "comment": "Adobe Discord RPC 홈페이지를 방문합니다."
+        },
+        "official_discord": {
+          "name": "Adobe Discord RPC 공식 서버",
+          "comment": "Adobe Discord RPC 디스코드 공식 서버에 방문합니다."
+        }
+      },
+      "desktop": {
+        "run": {
+          "name": "Adobe Discord RPC 실행",
+          "comment": "Adobe Discord RPC를 실행합니다."
+        },
+        "setting": {
+          "name": "Adobe Discord RPC 설정",
+          "comment": "Adobe Discord RPC 설정을 변경합니다."
+        },
+        "update": {
+          "name": "Adobe Discord RPC 업데이트",
+          "comment": "Adobe Discord RPC 업데이트를 확인합니다."
+        }
+      }
+    }
+  },
+  "finish": {
+    "title": "Adobe Discord RPC 설치 완료",
+    "desc1": "Adobe Discord RPC 설치가 완료되었습니다.",
+    "desc2": "원하시는 옵션을 선택하신 후, '닫기'를 누르세요.",
+    "run": "Adobe Discord RPC 실행",
+    "github": "Github 열기",
+    "discord": "공식 디스코드 서버 열기",
+    "close": "닫기"
+  },
+  "fail": {
+    "title": "Adobe Discord RPC 설치 실패",
+    "desc1": "Adobe Discord RPC 설치를 실패하였습니다.",
+    "desc2": "설치 폴더를 수동으로 삭제하셔야 합니다.",
+    "desc3": "원하시는 옵션을 선택하신 후, '닫기'를 누르세요."
+  },
+  "header": {
+    "headerLicense": "라이센스 동의",
+    "headerPrivacy": "개인정보 수집 및 이용 동의",
+    "headerOptions": "옵션 선택",
+    "headerMenu":"시작 메뉴 폴더 지정",
+    "headerPath": "설치 경로 지정",
+    "headerInstall": "설치 진행",
+    "headerFinish": "설치 완료"
+  },
+  "exitModal": {
+    "modalSure": "정말로 종료할까요?",
+    "modalDesc1": "아직 프로그램이 설치되지 않았습니다.",
+    "modalDesc2": "지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.",
+    "modalOkay": "설치 프로그램 종료",
+    "modalReturn": "설치 화면으로 돌아가기"
+  },
+  "installNotify": {
+    "title": "Adobe Discord RPC 설치",
+    "body1": "프로그램이 설치 중입니다!",
+    "body2": "설치가 완료되면 알람을 띄웁니다.",
+    "finish": "설치가 완료되었습니다!"
+  },
+  "exitButton": "설치 취소",
+  "previousButton": "뒤로",
+  "nextButton": "다음",
+  "installCancelAlert": "설치 중에는 종료할 수 없습니다!",
+  "closeButton": "닫기"
+}

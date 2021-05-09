@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="./images/welcome.png" alt="Adobe Discord RPC banner">
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h4 id="title" style="text-align: left; word-break: keep-all;">Adobe Discord RPC 설치</h4> <!-- Adobe Discord RPC Install -->
+                  <p id="desc1" style="text-align: left; word-break: keep-all;">Adobe Discord RPC 설치를 시작합니다.</p>
+                  <p id="desc2" style="text-align: left; word-break: keep-all;">계속하려면 '다음'을 누르세요.</p>
+                  <!-- Start installing Adobe Discord RPC.<br />Press 'Next' to continue. -->
+                  <br />
+                </div>
+                <div class="card-action">
+                  <a id="exit-button" href="javascript:void(0);" class="btn waves-effect waves-teal btn-flat red-text white left modal-trigger" data-target="exit_q">설치 취소</a> <!-- Exit -->
+                  <a id="next-button" href="option_2_license.html" class="btn waves-effect waves-teal btn-flat cyan-text white right">다음 ></a> <!-- Next > -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Modal Structure S -->
+    <div id="exit_q" class="modal">
+      <div class="modal-content">
+        <h4 id="modal-sure">정말로 종료할까요?</h4>
+        <p id="modal-desc1">아직 프로그램이 설치되지 않았습니다.</p><p id="modal-desc2">지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal-okay" href="javascript:installExit()" class="modal-close waves-effect waves-green btn-flat red-text">설치 프로그램 종료</a>
+        <a id="modal-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 화면으로 돌아가기</a>
+      </div>
+    </div>
+    <!-- Modal Structure E -->
+
+    <!-- JS -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function showExitModal() {
+        M.Modal.getInstance(document.getElementById('exit_q')).open();
+      }
+
+      function installExit() {
+        ipcRenderer.send('installExit', 0);
+      }
+
+      $(document).ready(function(){
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#title').html(lang['welcome']['title']);
+        $('#desc1').html(lang['welcome']['desc1']);
+        $('#desc2').html(lang['welcome']['desc2']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#next-button').html(`${lang['nextButton']} >`);
+        $('#modal-sure').html(lang['exitModal']['modalSure']);
+        $('#modal-desc1').html(lang['exitModal']['modalDesc1']);
+        $('#modal-desc2').html(lang['exitModal']['modalDesc2']);
+        $('#modal-okay').html(lang['exitModal']['modalOkay']);
+        $('#modal-return').html(lang['exitModal']['modalReturn']);
+        $('.modal').modal();
+
+        ipcRenderer.on('exitModal', (arg) => {
+          showExitModal();
+        });
+      });
+    </script>
+  </body>
+</html>

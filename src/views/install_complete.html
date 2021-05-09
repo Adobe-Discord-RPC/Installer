@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-image"><img src="./images/welcome.png"></div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h4 id="title" style="text-align: left;">Adobe Discord RPC 설치</h4>
+                  <p id="desc1" style="text-align: left; word-break: keep-all;">Adobe Discord RPC 설치가 완료되었습니다.</p>
+                  <p id="desc2" style="text-align: left; word-break: keep-all;">원하시는 옵션을 선택하신 후, '닫기'를 누르세요.</p>
+                  <br /><br />
+                  <p><label>
+                    <input id="check-run" type="checkbox" checked />
+                    <span id="run">Adobe Discord RPC 실행</span>
+                  </label></p>
+                  <br />
+                  <p><label>
+                    <input id="check-github" type="checkbox" checked />
+                    <span id="github">Github 열기</span>
+                    <!-- https://github.com/Adobe-Discord-RPC -->
+                  </label></p>
+                  <br />
+                  <p><label>
+                    <input id="check-discord" type="checkbox" checked />
+                    <span id="discord">공식 디스코드 서버</span>
+                    <!-- https://discord.gg/7MBYbERafX -->
+                  </label></p>
+                </div>
+                <div class="card-action">
+                  <a id="close" href="javascript:installFinish();" class="btn waves-effect waves-teal btn-flat cyan-text white right">닫기</a> <!-- Exit -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function installFinish() {
+        let runProgram = $('#check-run').is(':checked');
+        let openGithub = $('#check-github').is(':checked');
+        let openDiscord = $('#check-discord').is(':checked');
+
+        ipcRenderer.send('installFinish', {
+          runProgram: runProgram,
+          openGithub: openGithub,
+          openDiscord: openDiscord
+        });
+      }
+
+      $(document).ready(function () {
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#title').html(lang['finish']['title']);
+        $('#desc1').html(lang['finish']['desc1']);
+        $('#desc2').html(lang['finish']['desc2']);
+        $('#run').html(lang['finish']['run']);
+        $('#github').html(lang['finish']['github']);
+        $('#discord').html(lang['finish']['discord']);
+        $('#close').html(lang['closeButton']);
+      });
+    </script>
+  </body>
+</html>

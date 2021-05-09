@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-image"><img src="./images/welcome.png"></div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h4 id="title" style="text-align: left;">Adobe Discord RPC 설치</h4>
+                  <p id="desc1" style="text-align: left; word-break: keep-all;">desc1</p>
+                  <p id="desc2" style="text-align: left; word-break: keep-all;">desc2</p>
+                  <p id="desc3" style="text-align: left; word-break: keep-all;">desc3</p>
+                  <br /><br />
+                  <p><label>
+                    <input id="check-github" type="checkbox" checked />
+                    <span id="github">Github 열기</span>
+                    <!-- https://github.com/Adobe-Discord-RPC -->
+                  </label></p>
+                  <br />
+                  <p><label>
+                    <input id="check-discord" type="checkbox" checked />
+                    <span id="discord">공식 디스코드 서버</span>
+                    <!-- https://discord.gg/7MBYbERafX -->
+                  </label></p>
+                </div>
+                <div class="card-action">
+                  <a href="javascript:installFinish();" class="btn waves-effect waves-teal btn-flat cyan-text white right">닫기</a> <!-- Exit -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function installFinish() {
+        let openGithub = $('#check-github').is(':checked');
+        let openDiscord = $('#check-discord').is(':checked');
+
+        ipcRenderer.send('installFinish', {
+          runProgram: false,
+          openGithub: openGithub,
+          openDiscord: openDiscord
+        });
+      }
+
+      $(document).ready(function () {
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#title').html(lang['fail']['title']);
+        $('#desc1').html(lang['fail']['desc1']);
+        $('#desc2').html(lang['fail']['desc2']);
+        $('#desc3').html(lang['fail']['desc3']);
+        $('#check-github').html(lang['finish']['github']);
+        $('#check-discord').html(lang['finish']['discord']);
+        $('#close-button').html(lang['closeButton']);
+
+        ipcRenderer.on('exitModal', (event, res) => {
+          installFinish();
+        });
+      });
+    </script>
+  </body>
+</html>

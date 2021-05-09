@@ -1,0 +1,213 @@
+{
+  "language": {
+    "langDesc": "Select Language",
+    "desc": "The program will be installed in the selected language.",
+    "startButton": "Proceed"
+  },
+  "welcome": {
+    "title": "Adobe Discord RPC Install",
+    "desc1": "Start installing Adobe Discord RPC.",
+    "desc2": "Press 'Next' to continue."
+  },
+  "license": {
+    "agreement": "License agreement",
+    "desc1": "Please read the license below carefully and check whether you agree to the license.",
+    "desc2": "The user is solely responsible for the problem caused by not reading the full text.",
+    "accept": "I accept the license."
+  },
+  "privacy": {
+    "agreement": "Consent to collect and use personal information",
+    "desc1": "Please read the below personal information collection and usage instructions carefully and check whether you agree or not.",
+    "desc2": "The user is solely responsible for the problem caused by not reading the full text.",
+    "accept": "I agree to collect and use the above personal information."
+  },
+  "option": {
+    "title": "Select installation options",
+    "desc": "Please select a program installation option.",
+    "mainProgram": "Adobe Discord RPC Main Program (Core + Monitor)",
+    "supportProgram": "Supporting Program Lists",
+    "controller": "Adobe Discord RPC Controller",
+    "configurator": "Adobe Discord RPC Configurator",
+    "startWithWindows": "Start a program with Windows startup",
+    "desktopShortCut": "Add a program shortcut to your desktop"
+  },
+  "startup": {
+    "title": "Specify Start Menu Folder",
+    "desc": "Specify the Start Menu folder where the program's shortcut will be created.",
+    "folderName": "Start Menu Folder name",
+    "dontUse": "I don't want to add the Start menu folder."
+  },
+  "path": {
+    "title": "Select the program installation path",
+    "desc": "Select the path where the program will be installed.",
+    "installPath": "Installation path",
+    "findFolder": "find",
+    "pathInfo": "Some files may be installed on drive C even if you specify a separate path."
+  },
+  "check": {
+    "necessary": "Required",
+    "choose": "Optional",
+    "null": "N/A",
+    "folder": "Start Menu Folder",
+    "folderDontUse": "I will not use the Start menu folder.",
+    "path": "Installation path"
+  },
+  "install": {
+    "title": "Program installation in progress",
+    "desc1": "The program is being installed according to the settings you selected.",
+    "desc2": "If you switch to sleep mode or exit the program during installation, you may experience problems.",
+    "infoMsg": {
+      "PG": {
+        "Core": "Main Program",
+        "List": "Supporting Program Lists",
+        "Monitor": "Program Monitor",
+        "Configurator": "Program Configurator",
+        "Controller": "Program Controller",
+        "Scripts": "Required Script (will be installed on drive C)"
+      },
+      "wrongAccess": "Wrong Access.",
+      "startInstall": "Start installing the program.",
+      "folderInit": {
+        "working": "\nInitializing installation folder...",
+        "failed": "installation folder initialization failed.",
+        "success": "The installation folder was successfully initialized."
+      },
+      "fileDownload": {
+        "working": "\nStart downloading %PROGRAMNAME%.",
+        "failed": "Failed to download %PROGRAMNAME%.",
+        "success": "%PROGRAMNAME% download completed."
+      },
+      "fileCheck": {
+        "failed": "Validate check failed.",
+        "success": "Validate check is complete."
+      },
+      "fileUnpack": {
+        "working": "\nExtracting %PROGRAMNAME% to temporary folder.\nIt takes a few minutes depending on your PC specification.",
+        "failed": "%PROGRAMNAME% extracting failed.",
+        "success": "Extracted successfully."
+      },
+      "fileMove": {
+        "working": "\nMoving files from the temporary folder to the installation folder is in progress.\nIt takes a few minutes depending on your PC specification.",
+        "failed": "Failed to move folder.",
+        "success": "Successfully moved folder."
+      },
+      "writeSetting": {
+        "working": "\nGenerating config file.",
+        "failed": "Failed to create config file.",
+        "success": "Successfully created config file."
+      },
+      "writeRegs": {
+        "working": "\nRegistering data with registry.",
+        "failed": "Registry registration failed.",
+        "success": "successfully registered program data in the registry."
+      },
+      "startMenuShortCut": {
+        "working": "\nCreating a program shortcuts on the Start menu.",
+        "failed": "Program shortcut creation failed.",
+        "success": "have successfully created shortcuts."
+      },
+      "startup": {
+        "working": "\nRegistering programs to run with Windows startup.",
+        "failed": "Registration failed.",
+        "success": "Successfully registered."
+      },
+      "desktopShortCut": {
+        "working": "\nCreating program shortcuts on the desktop.",
+        "failed": "Creation failed.",
+        "success": "Successfully created a program shortcut on the desktop."
+      }
+    },
+    "shortCut": {
+      "startMenu": {
+        "run": {
+          "name": "Run Adobe Discord RPC",
+          "comment": "Run Adobe Discord RPC."
+        },
+        "exit": {
+          "name": "Exit Adobe Discord RPC",
+          "comment": "Exit Adobe Discord RPC."
+        },
+        "configurator": {
+          "name": "Adobe Discord RPC Configurator",
+          "comment": "Run Adobe Discord RPC Configurator."
+        },
+        "setting": {
+          "name": "Adobe Discord RPC Setup",
+          "comment": "Change Adobe Discord RPC settings."
+        },
+        "update": {
+          "name": "Update Adobe Discord RPC",
+          "comment": "Check for Adobe Discord RPC updates."
+        },
+        "delete": {
+          "name": "Uninstall Adobe Discord RPC",
+          "comment": "Uninstall Adobe Discord RPC."
+        },
+        "homepage": {
+          "name": "Adobe Discord RPC Homepage",
+          "comment": "Visit the Adobe Discord RPC homepage."
+        },
+        "official_discord": {
+          "name": "Adobe Discord RPC Official Discord",
+          "comment": "Visit Adobe Discord RPC Official Discord Server."
+        }
+      },
+      "desktop": {
+        "run": {
+          "name": "Run Adobe Discord RPC",
+          "comment": "Run Adobe Discord RPC."
+        },
+        "setting": {
+          "name": "Adobe Discord RPC Setup",
+          "comment": "Change Adobe Discord RPC settings."
+        },
+        "update": {
+          "name": "Update Adobe Discord RPC",
+          "comment": "Check for Adobe Discord RPC updates."
+        }
+      }
+    }
+  },
+  "finish": {
+    "title": "Adobe Discord RPC Install Complete",
+    "desc1": "Adobe Discord RPC installation is complete.",
+    "desc2": "Select the option you want, then press 'Exit'.",
+    "run": "Run Adobe Discord RPC",
+    "github": "Open Github Repository",
+    "discord": "Open Official Discord",
+    "close": "Exit"
+  },
+  "fail": {
+    "title": "Adobe Discord RPC Install Failed",
+    "desc1": "Adobe Discord RPC installation failed.",
+    "desc2": "You must delete the installation folder manually.",
+    "desc3": "Select the option you want, then press 'Exit'."
+  },
+  "header": {
+    "headerLicense": "License",
+    "headerPrivacy": "Personal information",
+    "headerOptions": "Options",
+    "headerMenu":"Start Menu Folder",
+    "headerPath": "Install Path",
+    "headerInstall": "Install",
+    "headerFinish": "Finish"
+  },
+  "exitModal": {
+    "modalSure": "Are You sure?",
+    "modalDesc1": "The program is not installed yet.",
+    "modalDesc2": "If you exit the installation program now, the program will exit without installing it.",
+    "modalOkay": "Exit",
+    "modalReturn": "Back"
+  },
+  "installNotify": {
+    "title": "Program installation in progress",
+    "body1": "We are currently installing a program.",
+    "body2": "We'll let you know when the installation is finished.",
+    "finish": "The installation is complete!"
+  },
+  "exitButton": "Exit",
+  "previousButton": "Back",
+  "nextButton": "Next",
+  "installCancelAlert": "You cannot exit during installation!",
+  "closeButton": "Close"
+}

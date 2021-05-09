@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-tabs">
+                  <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a id="header-license" class="grey-text" disabled>라이센스 동의</a></li>
+                    <li class="tab"><a id="header-options" class="grey-text" disabled>옵션 선택</a></li>
+                    <li class="tab"><a id="header-menu" class="grey-text" disabled>시작 메뉴 폴더 지정</a></li>
+                    <li class="tab"><a id="header-path" class="grey-text" disabled>설치 경로 지정</a></li>
+                    <li class="tab"><a id="header-confirm" class="grey-text" disabled>설치 확인</a></li>
+                    <li class="tab"><a id="header-install" class="pink-text" disabled>설치 진행</a></li>
+                    <li class="tab"><a id="header-finish" class="grey-text" disabled>설치 완료</a></li>
+                  </ul>
+                </div>
+                <div class="card-content">
+                  <h4 id="title" style="text-align: center;">프로그램 설치 진행중</h4>
+                  <p id="desc1" style="text-align: center; word-break: keep-all;">선택하신 설정에 따라 프로그램을 설치하고 있습니다.</p>
+                  <p id="desc2" style="text-align: center; word-break: keep-all;"><b>설치 도중 절전모드로 전환되거나 프로그램이 종료될 경우, 문제가 생길 수 있습니다.</b></p>
+                  <br />
+                  <div class="progress">
+                    <!-- 진전도에 따라 style 변경하셈 -->
+                    <div id="progress-bar" class="determinate" style="width: 0%"></div>
+                  </div>
+                  <br />
+                  <textarea id="log" cols="100" style="height: 150px; resize: none;" disabled></textarea>
+                  <br />
+                </div>
+                <div class="card-action">
+                  <a id="exit-button" class="btn waves-effect waves-teal btn-flat red-text white left" disabled>설치 취소</a>
+                  <a id="next-button" href="javascript:finish()" class="btn waves-effect waves-teal btn-flat cyan-text white right" disabled>다음 ></a>
+                  <a id="previous-button" class="btn waves-effect waves-teal btn-flat orange-text white right" disabled>< 뒤로</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function finish() {
+        ipcRenderer.send('finish', 0);
+      }
+
+      $(document).ready(function(){
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#header-license').html(lang['header']['headerLicense']);
+        $('#header-options').html(lang['header']['headerOptions']);
+        $('#header-privacy').html(lang['header']['headerPrivacy']);
+        $('#header-menu').html(lang['header']['headerMenu']);
+        $('#header-path').html(lang['header']['headerPath']);
+        $('#header-confirm').html(lang['header']['headerConfirm']);
+        $('#header-install').html(lang['header']['headerInstall']);
+        $('#header-finish').html(lang['header']['headerFinish']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#next-button').html(`${lang['nextButton']} >`);
+        $('#previous-button').html(`< ${lang['previousButton']}`);
+
+        $('#title').html(lang['install']['title']);
+        $('#desc1').html(lang['install']['desc1']);
+        $('#desc2').html(lang['install']['desc2']);
+
+        ipcRenderer.send('installStart', 0);
+
+        ipcRenderer.on('exitModal', (event, res) => {
+          M.toast({html: lang['installCancelAlert']});
+        });
+
+        ipcRenderer.on('installMessage', (event, res) => {
+          let $log = $('#log');
+          $log.val(`${$log.val()}${res.message}\n`);
+          $log.scrollTop($log.prop('scrollHeight'));
+          if (res.percentage && typeof res.percentage === 'number') {
+            $('#progress-bar').animate({
+              width: `${res.percentage}%`
+            }, 300);
+          }
+        });
+
+        ipcRenderer.on('installFinish', (event, res) => {
+          $('#next-button').attr('disabled', false);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adobe Discord RPC Installer</title>
+    <!-- Google Icon Font
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <!-- main.css -->
+    <link type="text/css" rel="stylesheet" href="./stylesheets/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./stylesheets/global.css"/>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/materialize.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+  </head>
+
+  <body class="indigo lighten-4">
+    <!-- Main div S -->
+    <div class="container">
+      <div class="row">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+          <div class="col s3"></div>
+          <div class="col s12">
+              <div class="card horizontal">
+                <div class="card-stacked">
+                  <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                      <li class="tab"><a id="header-license" class="grey-text" disabled>라이센스 동의</a></li>
+                      <li class="tab"><a id="header-privacy" class="grey-text" disabled>개인정보 수집 및 이용 동의</a></li>
+                      <li class="tab"><a id="header-options" class="grey-text" disabled>옵션 선택</a></li>
+                      <li class="tab"><a id="header-menu" class="pink-text" disabled>시작 메뉴 폴더 지정</a></li>
+                      <li class="tab"><a id="header-path" class="grey-text" disabled>설치 경로 지정</a></li>
+                      <li class="tab"><a id="header-install" class="grey-text" disabled>설치 진행</a></li>
+                      <li class="tab"><a id="header-finish" class="grey-text" disabled>설치 완료</a></li>
+                    </ul>
+                  </div>
+                  <div class="card-content">
+                    <h4 id="title" style="text-align: center;">시작메뉴 폴더 지정</h4>
+                    <p id="desc" style="text-align: center;">프로그램의 바로가기가 생성 될 시작메뉴 폴더를 지정하세요.</p>
+                    <br>
+                    <div class="input-field col s12">
+                      <input id="startup_fd_name" type="text" class="validate" placeholder="Adobe Discord RPC">
+                      <label id="folder-name" for="startup_fd_name">시작메뉴 폴더 이름</label>
+                    </div>
+                    <div class="input-field col s12">
+                      <p>
+                        <label>
+                          <input id="start-folder" type="checkbox" class="filled-in" onclick="box_checked(this);" />
+                          <span id="dont-use">시작메뉴 폴더를 사용하지 않습니다.</span>
+                        </label>
+                      </p>
+                    </div>
+                    <br /><br /><br />
+                  </div>
+                  <div class="card-action">
+                    <a id="exit-button" href="javascript:void(0);" class="btn waves-effect waves-teal btn-flat red-text white left modal-trigger" data-target="exit_q">설치 취소</a>
+                    <a id="next-button" href="javascript:setStartMenu()" class="btn waves-effect waves-teal btn-flat cyan-text white right">다음 ></a>
+                    <a id="previous-button" href="option_4_select_option.html" class="btn waves-effect waves-teal btn-flat orange-text white right">< 뒤로</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main div E -->
+
+    <!-- Modal Structure S -->
+    <div id="exit_q" class="modal">
+      <div class="modal-content">
+        <h4 id="modal-sure">정말로 종료할까요?</h4>
+        <p id="modal-desc1">아직 프로그램이 설치되지 않았습니다.</p><p id="modal-desc2">지금 설치 프로그램을 종료하면 프로그램이 설치되지 않은 채 종료됩니다.</p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal-okay" href="javascript:installExit()" class="modal-close waves-effect waves-green btn-flat red-text">설치 프로그램 종료</a>
+        <a id="modal-return" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat cyan-text">설치 화면으로 돌아가기</a>
+      </div>
+    </div>
+    <!-- Modal Structure E -->
+
+    <!-- JS -->
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+
+      function showExitModal() {
+        M.Modal.getInstance(document.getElementById('exit_q')).open();
+      }
+
+      function installExit() {
+        ipcRenderer.send('installExit', 0);
+      }
+
+      function setStartMenu() {
+        let $folderInput = $('#startup_fd_name');
+        let startMenuFolder = $folderInput.val();
+        let folderUse = !($('#start-folder').is(':checked'));
+        if (folderUse && startMenuFolder === '') startMenuFolder = $folderInput.attr('placeholder');
+        ipcRenderer.send('setStartMenu', {startMenuFolder: startMenuFolder, folderUse: folderUse});
+      }
+
+      $(document).ready(function(){
+        let lang = ipcRenderer.sendSync('getLang', 0);
+        $('#header-license').html(lang['header']['headerLicense']);
+        $('#header-privacy').html(lang['header']['headerPrivacy']);
+        $('#header-options').html(lang['header']['headerOptions']);
+        $('#header-menu').html(lang['header']['headerMenu']);
+        $('#header-path').html(lang['header']['headerPath']);
+        $('#header-confirm').html(lang['header']['headerConfirm']);
+        $('#header-install').html(lang['header']['headerInstall']);
+        $('#header-finish').html(lang['header']['headerFinish']);
+        $('#exit-button').html(lang['exitButton']);
+        $('#next-button').html(`${lang['nextButton']} >`);
+        $('#previous-button').html(`< ${lang['previousButton']}`);
+        $('#modal-sure').html(lang['exitModal']['modalSure']);
+        $('#modal-desc1').html(lang['exitModal']['modalDesc1']);
+        $('#modal-desc2').html(lang['exitModal']['modalDesc2']);
+        $('#modal-okay').html(lang['exitModal']['modalOkay']);
+        $('#modal-return').html(lang['exitModal']['modalReturn']);
+        $('.modal').modal();
+
+        $('#title').html(lang['startup']['title']);
+        $('#desc').html(lang['startup']['desc']);
+        $('#folder-name').html(lang['startup']['folderName']);
+        $('#dont-use').html(lang['startup']['dontUse']);
+
+        let config = ipcRenderer.sendSync('getInstallOption', 0);
+        $('#startup_fd_name').attr('placeholder', config.startMenuFolder);
+        $('#start-folder').attr('checked', !(config.startMenuFolderUse));
+
+        ipcRenderer.on('exitModal', (arg) => {
+          showExitModal();
+        });
+      });
+
+      function box_checked(checkbox) {
+        let startup_fd_name = $('#startup_fd_name');
+        if (checkbox.checked === true) {
+          startup_fd_name.attr('readonly', true);
+          startup_fd_name.attr('placeholder', '');
+          startup_fd_name.val('');
+        } else {
+          startup_fd_name.attr('readonly', false);
+          startup_fd_name.attr('placeholder', 'Adobe Discord RPC');
+          startup_fd_name.val('');
+        }
+      }
+    </script>
+  </body>
+</html>

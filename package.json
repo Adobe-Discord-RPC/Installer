@@ -1,0 +1,60 @@
+{
+  "name": "adobe-discord-rpc_installer",
+  "version": "2021.05.09.01-pre1",
+  "description": "Adobe Discord RPC Program Installer",
+  "main": "src/app.js",
+  "scripts": {
+    "update-dependencies": "chcp 65001 && npx ncu -u && npm i -D --save",
+    "build": "chcp 65001 && npx electron-builder",
+    "start": "chcp 65001 && electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Adobe-Discord-RPC/Installer-Private.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Adobe-Discord-RPC/Installer-Private/issues"
+  },
+  "homepage": "https://adobe.discordrpc.org",
+  "bin": {
+    "app": "./src/app.js"
+  },
+  "dependencies": {
+    "7zip-bin": "^5.1.1",
+    "check-internet-connected": "^2.0.5",
+    "create-desktop-shortcuts": "^1.4.0",
+    "crypto": "^1.0.1",
+    "find-process": "^1.4.4",
+    "moment": "^2.29.1",
+    "mv": "^2.1.1",
+    "node-7z": "^2.1.2",
+    "powershell": "^2.3.2",
+    "random-int": "^2.0.1",
+    "regedit": "^3.0.3",
+    "request": "^2.88.2",
+    "waait": "^1.0.5"
+  },
+  "devDependencies": {
+    "electron": "^12.0.7",
+    "electron-builder": "^22.11.1"
+  },
+  "build": {
+    "asar": false,
+    "appId": "org.discordrpc.adobe.installer",
+    "productName": "Adobe Discord RPC - Installer",
+    "npmRebuild": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "./src/images/icon.png"
+    }
+  },
+  "author": "Adobe Discord RPC Team",
+  "license": "GPL-3.0"
+}

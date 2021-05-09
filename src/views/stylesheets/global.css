@@ -1,0 +1,9 @@
+* {
+    user-select: none;
+    -webkit-user-drag: none;
+    cursor: default;
+}
+
+#exit-button, #next-button, #previous-button, #start-button {
+    cursor: pointer;
+}
